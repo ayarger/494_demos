@@ -1,0 +1,3 @@
+External Assets:
+HSBColor CS Version A: Jonathan Czeck (aarku)
+https://wiki.unity3d.com/index.php?title=HSBColor
