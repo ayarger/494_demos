@@ -9,7 +9,7 @@ public class WarpEffect : MonoBehaviour {
     /* Private Data */
     Material mat;
     public List<DistortionRing> distortion_rings = new List<DistortionRing>();
-    const int MAX_NUM_RINGS = 146;
+    const int MAX_NUM_RINGS = 30;
     const int NUM_DATA_MEMBERS_PER_RING = 7;
 
     /* Interface / Usage */

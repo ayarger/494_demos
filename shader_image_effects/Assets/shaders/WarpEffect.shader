@@ -23,7 +23,7 @@
 		*/
 			
 		/* Data provided by script */
-		float _DistortionRings[1022];
+		float _DistortionRings[210]; // (max of 30 simoultaneous rings) x (7 pieces of data per ring) = 210
 		int _NumDistortionRings = 0;
 		int _number_data_members = 0;
 		float _current_time = 0.0;
@@ -48,7 +48,6 @@
 
 			float color_factor = 1.0;
 
-
 			for (int index = 0; index < _NumDistortionRings; index++) {
 				// Grab properties of each ring
 				float x_pos = _DistortionRings[index * _number_data_members];
@@ -61,12 +60,10 @@
 
 				// Calculations
 				float ring_progress = clamp((_current_time - instantiation_time) / duration_sec, 0.0, 1.0);
-
 				float ring_distance_from_center = ring_progress * desired_distance;
 
 				// Figure out where the ring is.
 				half pixel_distance_from_center = distance(uv_custom, half2(x_pos, y_pos));
-
 				float distance_from_ring = abs(ring_distance_from_center - pixel_distance_from_center);
 
 				if (distance_from_ring < ring_radius && ring_progress < 1.0) {
