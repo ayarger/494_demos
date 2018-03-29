@@ -4,7 +4,10 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(Camera))]
+[DisallowMultipleComponent]
 public class WarpEffect : MonoBehaviour {
+
+    static WarpEffect singleton;
 
     /* Private Data */
     Material mat;
@@ -13,9 +16,13 @@ public class WarpEffect : MonoBehaviour {
     const int NUM_DATA_MEMBERS_PER_RING = 7;
 
     /* Interface / Usage */
-    public void SpawnDistortionRing(float x_pixel, float y_pixel, float strength, float ring_width, float travel_distance, float duration_sec)
+    public static void SpawnDistortionRing(float x_pixel, float y_pixel, float strength, float ring_width, float travel_distance, float duration_sec)
     {
-        distortion_rings.Add(new DistortionRing(x_pixel, y_pixel, strength, ring_width, travel_distance, duration_sec));
+        singleton = Camera.main.GetComponent<WarpEffect>();
+        if (singleton == null)
+            singleton = Camera.main.gameObject.AddComponent<WarpEffect>();
+
+        singleton.distortion_rings.Add(new DistortionRing(x_pixel, y_pixel, strength, ring_width, travel_distance, duration_sec));
     }
 
     private void Awake()

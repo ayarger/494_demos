@@ -20,13 +20,9 @@ public class SpawnDistortionOnCollision: MonoBehaviour
 
     void SpawnWithWorldPositionAndStrength(Vector3 pos, float strength)
     {
-        WarpEffect we = Camera.main.GetComponent<WarpEffect>();
-        if (we == null)
-            return;
-
         Vector3 screen_point = Camera.main.WorldToScreenPoint(pos);
 
-        we.SpawnDistortionRing(screen_point.x, screen_point.y, strength, _radius, _distance, _duration);
+        WarpEffect.SpawnDistortionRing(screen_point.x, screen_point.y, strength, _radius, _distance, _duration);
     }
 
     private void OnCollisionEnter(Collision collision)

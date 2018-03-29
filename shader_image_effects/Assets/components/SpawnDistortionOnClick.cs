@@ -20,10 +20,6 @@ public class SpawnDistortionOnClick : MonoBehaviour {
 
     void SpawnWithClickPosition(int x_pixel, int y_pixel)
     {
-        WarpEffect we = Camera.main.GetComponent<WarpEffect>();
-        if (we == null)
-            return;
-
-        we.SpawnDistortionRing(x_pixel, y_pixel, _strength, _radius, _distance, _duration);
+        WarpEffect.SpawnDistortionRing(x_pixel, y_pixel, _strength, _radius, _distance, _duration);
     }
 }
