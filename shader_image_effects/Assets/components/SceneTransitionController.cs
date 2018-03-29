@@ -88,7 +88,7 @@ public class SceneTransitionController : MonoBehaviour {
         loading_operation = SceneManager.LoadSceneAsync(scene_name);
         callback(singleton._current_state, scene_name);
         float loading_start_time = Time.time;
-        float minimum_loading_duration_sec = 1.0f;
+        float minimum_loading_duration_sec = 0.5f;
         while (!loading_operation.isDone || Time.time - loading_start_time < minimum_loading_duration_sec)
         {
             singleton.effect.SetProgress(1.0f);

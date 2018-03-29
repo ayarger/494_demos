@@ -31,122 +31,52 @@
 		uniform float _Progress;
 		uniform float _debug_coloring;
 
-		bool WithinBox(float2 uv, float2 box_dim) {
-			if (uv.x - 0.5 >= -box_dim.x * 0.5 && uv.x - 0.5 <= box_dim.x * 0.5 && uv.y - 0.5 >= -box_dim.y * 0.5 && uv.y - 0.5 <= box_dim.y * 0.5)
+		bool WithinBox(float2 pixel_centered, float2 box_dim) {
+			if (pixel_centered.x >= -box_dim.x * 0.5 && pixel_centered.x <= box_dim.x * 0.5 && pixel_centered.y >= -box_dim.y * 0.5 && pixel_centered.y <= box_dim.y * 0.5)
 				return true;
 			return false;
 		}
 
-		float2 UVWithinBox(float2 uv, float2 box_dim) {
+		float2 UVWithinBox(float2 pixel_centered, float2 box_dim) {
 			
-			half x_progress = (uv.x - 0.5 - -box_dim.x * 0.5) / box_dim.x;
-			half y_progress = (uv.y - 0.5 - -box_dim.y * 0.5) / box_dim.y;
+			//half x_progress = (uv.x - 0.5 - -box_dim.x * 0.5) / box_dim.x;
+			//half y_progress = (uv.y - 0.5 - -box_dim.y * 0.5) / box_dim.y;
+
+			float x_progress = (pixel_centered.x - -box_dim.x * 0.5) / box_dim.x;
+			float y_progress = (pixel_centered.y - -box_dim.y * 0.5) / box_dim.y;
 
 			return float2(x_progress, y_progress);
 		}
 
-		float4 frag(v2f_img i) : COLOR{
-
-			half2 pixel_custom = i.uv;
+		float4 frag(v2f_img i) : COLOR {
+			// Convert from UV to screen coordinates
+			float2 pixel_screen = half2(i.uv.x * _screen_resolution_x, i.uv.y * _screen_resolution_y);
 			
-			// Convert to screen coordinates
-			pixel_custom = half2(pixel_custom.x * _screen_resolution_x, pixel_custom.y * _screen_resolution_y);
-
-			half2 center = half2(_x_pixel_center, _y_pixel_center);
-
-			float color_factor = 1.0;
-			
+			// Calculate the size of the image box.
+			float max_axis = max(_screen_resolution_x, _screen_resolution_y);
 			float progress = clamp(_Progress, 0.0, 1.0);
 
-			float box_width = progress * maximum_size_factor;
-			float box_height = progress * maximum_size_factor;
+			float box_width = progress * max_axis * maximum_size_factor;
+			float box_height = progress * max_axis * maximum_size_factor;
 			float2 box_dim = float2(box_width, box_height);
 
+			// Center the pixel coordinates
+			float2 pixel_centered = pixel_screen - float2(_screen_resolution_x * 0.5, _screen_resolution_y * 0.5);
 
-			// Calculations
-
-			float max_horizontal_axis = max(_screen_resolution_x - _x_pixel_center, _x_pixel_center);
-			float max_vertical_axis = max(_screen_resolution_y - _y_pixel_center, _y_pixel_center);
-
-			float max_diagonal = sqrt(max_horizontal_axis*max_horizontal_axis + max_vertical_axis * max_vertical_axis);
-
-			// Figure out where the ring is.
-			half pixel_distance_from_center = distance(pixel_custom, half2(_x_pixel_center, _y_pixel_center));
-
-			if (pixel_distance_from_center > progress * max_diagonal) {
-				//float distortion_factor = 1.0 - (distance_from_ring / ring_radius);
-
-				// Convert UV to centered coordinate system.
-				//half2 uv_custom_centered = uv_custom - half2(x_pos, y_pos);
-
-				// Multiply to push uv out slightly.
-				//uv_custom_centered = uv_custom_centered - normalize(uv_custom_centered) * (distortion_factor * distortion_strength);
-
-				// Convert back to lower-left coordinate system.
-				//uv_custom = uv_custom_centered + half2(x_pos, y_pos);
-				//color_factor = 0.0;
-			}
-			
-
-			half2 pixel_im = i.uv * half2(_texture_width, _texture_height);
-
-			half2 pixel_centered = pixel_custom - half2(_screen_resolution_x, _screen_resolution_y);
-
-
-			float distance_required = max(_texture_width, _texture_height);
-
-			float2 uv_final = i.uv + normalize(float2(0.5, 0.5) - i.uv) * (1.0 - progress) * distance_required;
-
-			float2 uv_centered = i.uv - float2(0.5, 0.5);
-			uv_centered += uv_centered * -0.01;
-			uv_final = uv_centered + float2(0.5, 0.5);
-			
-			
-			//uv_centered = uv_centered + normalize(uv_centered - half2(0.5, 0.5f)) * progress;
-
-			//uv_centered -= half2(0.5, 0.5);
-			//uv_centered += 
-
-
-			//uv_custom = half2(uv_custom.x / _screen_resolution_x, uv_custom.y / _screen_resolution_y);
-
-			// Grab the texel
-			
+			// Grab the texels
 			float4 c = tex2D(_MainTex, i.uv);
-			float4 c_im = tex2D(_Symbol, uv_final);
-			
-			if (uv_final.x > 1.0 || uv_final.x < 0.0 || uv_final.y > 1.0 || uv_final.y < 0.0)
-				c = float4(0, 0, 0, 0);
 
-			//if (c_im.a > 0)
-			//	c = float4(0, 0, 0, 0);
-
-
-			if (WithinBox(i.uv, box_dim)) {
-				//c = float4(1, 0, 0, 1);
-				float2 box_uv = UVWithinBox(i.uv, box_dim);
+			// Is pixel within the image box?
+			if (WithinBox(pixel_centered, box_dim)) {
+				float2 box_uv = UVWithinBox(pixel_centered, box_dim);
 
 				float4 box_color = tex2D(_Symbol, box_uv);
 				if (box_color.a > 0.1)
 					c = box_color;
-
-				
 			}
 			else
 				c = float4(0, 0, 0, 1);
 
-			
-
-			// Debug coloring to see the regions of the screen affected
-			// by distortion.
-			//if(_debug_coloring > 0.5)
-			//	c = c * color_factor;
-
-			float lum = c.r*.3 + c.g*.59 + c.b*.11;
-			float3 bw = float3(lum, lum, lum);
-
-			float4 result = c;
-			result.rgb = c.rgb;
 			return c;
 		}
 		
