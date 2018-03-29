@@ -38,10 +38,6 @@
 		}
 
 		float2 UVWithinBox(float2 pixel_centered, float2 box_dim) {
-			
-			//half x_progress = (uv.x - 0.5 - -box_dim.x * 0.5) / box_dim.x;
-			//half y_progress = (uv.y - 0.5 - -box_dim.y * 0.5) / box_dim.y;
-
 			float x_progress = (pixel_centered.x - -box_dim.x * 0.5) / box_dim.x;
 			float y_progress = (pixel_centered.y - -box_dim.y * 0.5) / box_dim.y;
 
