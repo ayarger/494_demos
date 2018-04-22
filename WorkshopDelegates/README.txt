@@ -1,0 +1,1 @@
+This project demonstrates usage of delegates
