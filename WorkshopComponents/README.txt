@@ -1,0 +1,1 @@
+This project demonstrates component usage using interfaces to make reusable and modular components without the need for tags.

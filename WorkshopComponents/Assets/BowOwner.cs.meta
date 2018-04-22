@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: afc6d21952642394bb4d91823c4b4ed8
+timeCreated: 1510171307
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - arrowPrefab: {fileID: 1391513213705610, guid: d62e049e158ec5a46a7a220e60f893ca,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
