@@ -2,10 +2,10 @@
 #include <iostream>
 #include <vector>
 
-#include "headers/Entity.h"
-#include "headers/Component.h"
-#include "headers/Renderer.h"
-#include "headers/Transform.h"
+#include "Entity.h"
+#include "Component.h"
+#include "Renderer.h"
+#include "Transform.h"
 
 int main() {
     std::cout << "[Beginning Example]" << std::endl;
