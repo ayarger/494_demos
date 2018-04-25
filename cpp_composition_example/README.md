@@ -2,7 +2,7 @@
 
 ## Why?
 
-The Composition approach to code reuse and structuring is not limited to Unity and C# contexts. You can implement a basic Composition framework into existing C++ applications with fairly little effort, as demonstrated in this example. The primary steps are...
+The Composition approach to code reuse and structuring is not limited to Unity and C# contexts. One may implement a basic Composition framework into existing C++ applications with fairly little effort, as demonstrated in this example. The primary steps are...
 
 1. Establish a base "Component" class.
 2. Establish a base "Entity" class that "holds" components somehow.
