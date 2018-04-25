@@ -1,6 +1,6 @@
 # C++ Composition Example
 
-##Why?
+## Why?
 
 The Composition approach to code reuse and structuring is not limited to Unity and C# contexts. You can implement a basic Composition framework into existing C++ applications with fairly little effort, as demonstrated in this example. The primary steps are...
 
@@ -10,6 +10,6 @@ The Composition approach to code reuse and structuring is not limited to Unity a
 
 If you would like to create your own composition-based game engine and become independent of 3rd-parties like Unity and Epic Games, this example could serve as a decent starting point.
 
-##Usage
+## Usage
 
 Navigate to the cpp_composition_example directory and type "make". The example program may then be run via "./cpp_composition_example".
