@@ -1,4 +1,4 @@
-/* Q: Why on earth would we place implementation into a .h file? Hint: Templates make things messy */
+/* Q: Why on earth would we place implementation into a .h file? Hint: Templates can give the Linker fits. */
 
 #ifndef ENTITY_IMPL_H
 #define ENTITY_IMPL_H
