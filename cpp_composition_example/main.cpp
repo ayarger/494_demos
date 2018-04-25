@@ -15,14 +15,18 @@ int main() {
 	e.AddComponent<Renderer>();
     e.AddComponent<Transform>();
 	
+	std::cout << "[Accessing a component of an Entity]" << std::endl;
+	
 	Transform* entity_transform = e.GetComponent<Transform>();
 	entity_transform-> SetPosition(Point3{1, 2, 3});
 	std::cout << "Transform x: " << entity_transform->GetPosition().x << std::endl;
 	std::cout << "Transform y: " << entity_transform->GetPosition().y << std::endl;
 	std::cout << "Transform z: " << entity_transform->GetPosition().z << std::endl;
     
-    // 15 Updates
-    e.Update();
+	std::cout << "[Progressing the Entity / Component lifecycle]" << std::endl;
+    for(int i = 0; i < 15; i++) {
+		e.Update();
+	}
     
     std::cout << "[End of Example]" << std::endl;
 }
