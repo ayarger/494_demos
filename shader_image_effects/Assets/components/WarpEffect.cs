@@ -89,27 +89,27 @@ public class WarpEffect : MonoBehaviour {
         // on your screen.
         Graphics.Blit(source, destination, mat);
     }
+}
 
-    [System.Serializable]
-    public class DistortionRing
+[System.Serializable]
+public class DistortionRing
+{
+    public float x;
+    public float y;
+    public float strength;
+    public float radius;
+    public float distance;
+    public float duration_sec;
+    public float spawn_time;
+
+    public DistortionRing(float x, float y, float strength, float radius, float distance, float duration_sec)
     {
-        public float x;
-        public float y;
-        public float strength;
-        public float radius;
-        public float distance;
-        public float duration_sec;
-        public float spawn_time;
-
-        public DistortionRing(float x, float y, float strength, float radius, float distance, float duration_sec)
-        {
-            this.x = x;
-            this.y = y;
-            this.strength = strength;
-            this.radius = radius;
-            this.spawn_time = Time.time;
-            this.distance = distance;
-            this.duration_sec = duration_sec;
-        }
+        this.x = x;
+        this.y = y;
+        this.strength = strength;
+        this.radius = radius;
+        this.spawn_time = Time.time;
+        this.distance = distance;
+        this.duration_sec = duration_sec;
     }
 }
