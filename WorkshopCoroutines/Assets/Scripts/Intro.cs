@@ -9,6 +9,8 @@ public class Intro : MonoBehaviour {
     public AudioClip typing_sound_clip;
     public AudioClip background_music_clip;
 
+    public Text t;
+
 	// Use this for initialization
 	void Start () {
         cg = GetComponent<CanvasGroup>();
@@ -24,7 +26,7 @@ public class Intro : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
 
         // Perform type-text effect.
-        yield return StartCoroutine(TypeTextEffect("In a dark dungeon beneath planet Zebes...", 0.1f));
+        yield return StartCoroutine(TypeTextEffect("Hello from Hyrule!", 0.01f));
 
         // Dramatic pause.
         yield return new WaitForSeconds(1.0f);
