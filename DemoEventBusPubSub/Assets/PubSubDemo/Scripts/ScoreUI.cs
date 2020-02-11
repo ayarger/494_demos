@@ -19,6 +19,6 @@ public class ScoreUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        //EventBus.Unsubscribe(score_event_subscription);
+        EventBus.Unsubscribe(score_event_subscription);
     }
 }
